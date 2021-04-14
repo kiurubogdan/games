@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+ <head>
+    <title>Tetris</title>
+    <style>
+        html,
+        body {
+            background-color: lightgreen;
+            color: green;
+        }
+
+        #tetriscanvas {
+            display: block;
+            border: 4px solid green;
+            border-radius: 10px;
+            background-color: rgba(255,255,255,0.3);
+        }
+
+        #tetris {
+            margin: 0 auto;
+            width: 480px;
+            height: 600px;
+            text-align: center;
+            clear: both;
+        }
+
+        #tetrisleft {
+            width: 300px;
+            min-width: 300px;
+            height: 600px;
+            float: left;
+            margin: 0px;
+        }
+
+        #tetrisright {
+            width: 180px;
+            min-width: 180px;
+            height: 600px;
+            float: left;
+            margin: 0px;
+        }
+
+        .clear {
+            clear: left;
+        }
+
+        .info {
+            text-align: left;
+            margin-left: 24px;
+        }
+        
+        button {
+            border: 2px solid green;
+            color: green;
+            background: lightseagreen;
+            margin: 7px;
+            padding: 5px;
+            border-radius: 5px;
+            line-height: 1.3;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="tetris">
+        <div id="tetrisleft">
+            <canvas id="tetriscanvas" width="300" height="500"></canvas>
+            <audio id="clearsound" src="sound/pop.ogg" preload="auto"></audio>
+            <audio autoplay loop>
+                <source src="sound/music.ogg" type="audio/ogg; codecs=vorbis" preload="auto">
+                <small>?? ????</small>
+            </audio>
+        </div>
+        <div id="tetrisright">
+            <div align="center"><b>TETRIS</b></div>
+            <p class="info"><kbd>&harr;</kbd>: move left/right;
+                <br><kbd>&uarr;</kbd>: rotate;
+                <br><kbd>&darr;</kbd> or <kbd>Space</kbd>: drop;
+                <br><kbd>Esc</kbd>: pause
+            </p>
+            <canvas id="figurecanvas" width="120" height="120"></canvas>
+            <p class="info" id="tetriscount"></p>
+            <button onclick="document.location.reload();">Reset</button><br>
+            <button onclick="window.alert('paused');">Pause</button>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <script>
+        var columns = 10,
+            rows = 20; //???????????? ??????? ???????
+        var board = []; //??????
+        var lose; //????? ????
+        var lines = 0; //?????? ?????
+        var count = 0; //????
+        var maxCount = 0; //??????
+        var interval; //???????? ???? ? ??
+        var current; //??????? ???????
+        var currentX, currentY; //??????? ??????? ???????
+        var shapes = [ //?????? ?????
+            [1, 1, 1, 1], //I
+            [1, 1, 1, 0, //L
+                1
+            ],
+            [1, 1, 1, 0, //J
+                0, 0, 1
+            ],
+            [1, 1, 0, 0, //O
+                1, 1
+            ],
+            [1, 1, 0, 0, //Z
+                0, 1, 1
+            ],
+            [0, 1, 1, 0, //S
+                1, 1
+            ],
+            [0, 1, 0, 0, //T
+                1, 1, 1
+            ]
+        ];
+        var colors = [ //?????? ??????
+            '#84fb88', '#029567', '#1acc2a', '#3af840', '#08dd0f', '#05940a', '#034a05'
+        ];
+        var shaped = 0; //???? ?? ????????? ???????
+        var savedShape; //????????? ???????
+        maxCount = localStorage.getItem('record');
+
+        function drawNewShape(current) { //?????????? ????????? ?????? ?? ????????? ?????
+            var canvas = document.getElementById('figurecanvas');
+            var ctx = canvas.getContext('2d');
+            var width = canvas.width,
+                height = canvas.height;
+            var blockWidth = width / 4,
+                blockHeight = height / 4;
+            ctx.fillStyle = 'red';
+            ctx.strokeStyle = 'black';
+            ctx.clearRect(0, 0, width, height);
+            for (var y = 0; y < 4; y++) {
+                for (var x = 0; x < 4; x++) {
+                    if (current[y][x]) {
+                        ctx.fillStyle = colors[current[y][x] - 1];
+                        ctx.fillRect(blockWidth * x, blockHeight * y, blockWidth - 1, blockHeight - 1);
+                        ctx.strokeRect(blockWidth * x, blockHeight * y, blockWidth - 1, blockHeight - 1);
+                    }
+                }
+            }
+        }
+
+        function generateShape() { //????????????? ????????? ??????
+            var id = Math.floor(Math.random() * shapes.length);
+            var shape = shapes[id];
+            var current = [];
+            for (var y = 0; y < 4; y++) {
+                current[y] = [];
+                for (var x = 0; x < 4; x++) {
+                    var i = 4 * y + x;
+                    if (typeof(shape[i]) != 'undefined' && shape[i]) current[y][x] = id + 1;
+                    else current[y][x] = 0;
+                }
+            }
+            if (shaped) drawNewShape(current);
+            return current;
+        }
+
+        function newShape() { //??????? ????? ??????? 4x4 ? ??????? current
+            if (shaped) { //???? ???????????
+                for (var i = 0; i < savedShape.length; i++) current[i] = savedShape[i];
+            } else { //??? ???????????
+                current = generateShape();
+                shaped = 1;
+            }
+            savedShape = generateShape();
+            currentX = Math.floor((columns - 4) / 2);
+            currentY = 0; //????????? ??????? ????? ???????
+        }
+
+        function init() { //???????? ??????
+            for (var y = 0; y < rows; ++y) {
+                board[y] = [];
+                for (var x = 0; x < columns; x++) board[y][x] = 0;
+            }
+        }
+
+        function countPlus(lines0) { //??????? ?????
+            lines += lines0;
+            var bonus = [0, 40, 100, 300, 1200];
+            count += bonus[lines0];
+            if (count > maxCount) maxCount = count;
+            document.getElementById('tetriscount').innerHTML =
+                "Lines: " + lines + "<br>Count: " + count + "<br>Record: " + maxCount;
+            localStorage.setItem('record', maxCount);
+        }
+
+        function freeze() { //?????????? ??????? ? ???????? ?? ????????? ? board
+            for (var y = 0; y < 4; y++) {
+                for (var x = 0; x < 4; x++) {
+                    if (current[y][x]) board[y + currentY][x + currentX] = current[y][x];
+                }
+            }
+        }
+
+        function rotate(current) { //???????? ??????? ??????? current ?????? ??????? ???????
+            var newCurrent = [];
+            for (var y = 0; y < 4; y++) {
+                newCurrent[y] = [];
+                for (var x = 0; x < 4; x++) newCurrent[y][x] = current[3 - x][y];
+            }
+            return newCurrent;
+        }
+
+        function clearLines() { //?????????, ???? ?? ??????????? ????? ? ???????? ??
+            var cleared = 0;
+            for (var y = rows - 1; y > -1; y--) {
+                var rowFilled = true;
+                for (var x = 0; x < columns; x++) {
+                    if (board[y][x] == 0) {
+                        rowFilled = false;
+                        break;
+                    }
+                }
+                if (rowFilled) { //???????? ?????
+                    cleared++;
+                    document.getElementById('clearsound').play();
+                    for (var yy = y; yy > 0; yy--) {
+                        for (var x = 0; x < columns; x++) {
+                            board[yy][x] = board[yy - 1][x];
+                        }
+                    }
+                    y++;
+                }
+            }
+            return cleared;
+        }
+
+        function keyPress(key) { //?????????? ??????? ??????
+            switch (key) {
+                case 'escape':
+                    window.alert('paused'); //? JS ??? ???? ????????? ???? :)
+                    break;
+                case 'left':
+                    if (valid(-1)) --currentX;
+                    break;
+                case 'right':
+                    if (valid(1)) ++currentX;
+                    break;
+                case 'down':
+                    if (valid(0, 1)) ++currentY;
+                    break;
+                case 'rotate':
+                    var rotated = rotate(current);
+                    if (valid(0, 0, rotated)) current = rotated;
+                    break;
+            }
+        }
+
+        function valid(offsetX, offsetY, newCurrent) { //???????? ???????????? ???????? ??????? ?????? current
+            offsetX = offsetX || 0;
+            offsetY = offsetY || 0;
+            offsetX = currentX + offsetX;
+            offsetY = currentY + offsetY;
+            newCurrent = newCurrent || current;
+            for (var y = 0; y < 4; y++) {
+                for (var x = 0; x < 4; x++) {
+                    if (newCurrent[y][x]) {
+                        if (typeof(board[y + offsetY]) == 'undefined' || typeof(board[y + offsetY][x + offsetX]) == 'undefined' ||
+                            board[y + offsetY][x + offsetX] ||
+                            x + offsetX < 0 || y + offsetY >= rows || x + offsetX >= columns) {
+                            if (offsetY == 1) lose = true; //????? ????, ???? ??????? ?????? - ?? ??????? ?????
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
+        function playGame() { //???????? ??????? ???????, ???????? ????? ? ??????? ?????
+            if (valid(0, 1)) currentY++;
+            else {
+                freeze();
+                var cleared = clearLines();
+                if (cleared) countPlus(cleared);
+                if (lose) {
+                    window.alert('Game Over! Your score was:' + count);
+                    newGame();
+                    return false;
+                }
+                newShape();
+            }
+        }
+
+        function newGame() { //????? ????
+            clearInterval(interval);
+            init();
+            shaped = 0;
+            newShape();
+            lose = false;
+            lines = 0;
+            count = 0;
+            countPlus(0);
+            interval = setInterval(playGame, 300); //???????? ????, ??
+        }
+
+        newGame();
+    </script>
+    <script>
+        document.body.onkeydown = function(e) {
+            var keys = { //Клавиши
+                37: 'left',
+                39: 'right', //Стрелки влево и вправо
+                40: 'down',
+                32: 'down', //Вниз - пробелом или стрелкой вниз
+                38: 'rotate', //Вращение- стрелкой вверх
+                27: 'escape' //Пауза по клавише Esc
+            };
+            if (typeof(keys[e.keyCode]) != 'undefined') { //Если код клавиши допустимый,
+                keyPress(keys[e.keyCode]); //Передать его обработчику
+                render(); //и перерисовать стакан
+            }
+        };
+    </script>
+    <script>
+        var canvas = document.getElementById('tetriscanvas');
+        var ctx = canvas.getContext('2d');
+        var width = canvas.width,
+            height = canvas.height;
+        var blockWidth = width / columns,
+            blockHeight = height / rows;
+
+        function drawBlock(x, y) { //Нарисовать фигуру в позиции (x,y)
+            ctx.fillRect(blockWidth * x, blockHeight * y, blockWidth - 1, blockHeight - 1);
+            ctx.strokeRect(blockWidth * x, blockHeight * y, blockWidth - 1, blockHeight - 1);
+        }
+
+        function render() { //Нарисовать стакан и фигуры
+            ctx.clearRect(0, 0, width, height);
+            ctx.strokeStyle = 'black';
+            for (var x = 0; x < columns; x++) {
+                for (var y = 0; y < rows; y++) {
+                    if (board[y][x]) {
+                        ctx.fillStyle = colors[board[y][x] - 1];
+                        drawBlock(x, y);
+                    }
+                }
+            }
+            ctx.fillStyle = 'red';
+            ctx.strokeStyle = 'black';
+            for (var y = 0; y < 4; y++) {
+                for (var x = 0; x < 4; x++) {
+                    if (current[y][x]) {
+                        ctx.fillStyle = colors[current[y][x] - 1];
+                        drawBlock(currentX + x, currentY + y);
+                    }
+                }
+            }
+        }
+
+        setInterval(render, 50); //частота перерисовки, мс
+    </script>
+
+</body></html>

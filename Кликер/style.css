@@ -1,0 +1,176 @@
+/* Code by Kiuru Bogdan */
+@font-face {
+    font-family: PS2P;
+    src: url('fonts/PressStart2P.ttf');
+}
+
+* {
+   margin: 0;
+   padding: 0;
+}
+
+body {
+    color: #fff;
+    font-family: PS2P;
+    font-size: 16px;
+}
+
+.rank-1 {
+    background-image: url(img/earth.jpg);
+    background-size: cover;
+}
+
+.rank-2 {
+    background-image: url(img/moon.jpg);
+    background-size: cover;
+}
+
+.rank-3 {
+    background-image: url(img/mars.jpg);
+    background-size: cover;
+}
+
+.rank-4 {
+    background-image: url(img/venus.jpg);
+    background-size: cover;
+}
+
+.rank-5 {
+    background-image: url(img/mercury.jpeg);
+    background-size: cover;
+}
+
+.rank-6 {
+    background-image: url(img/jupiter.jpg);
+    background-size: cover;
+}
+
+.rank-7 {
+    background-image: url(img/saturn.jpg);
+    background-size: cover;
+}
+
+.rank-8 {
+    background-image: url(img/uranus.jpg);
+    background-size: cover;
+}
+
+.rank-9 {
+    background-image: url(img/neptun.jpg);
+    background-size: cover;
+}
+
+.rank-10 {
+    background-image: url(img/pluto.jpg);
+    background-size: cover;
+}
+
+.rank-11 {
+    background-image: url(img/sun.jpg);
+    background-size: cover;
+}
+
+.rank-12 {
+    background-image: url(img/cosmos.gif);
+    background-size: cover;
+}
+
+#work {
+    background-image: url(img/button.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 51%;
+    background-color: transparent;
+}
+
+#work:active {
+    transform: scale(1.05);
+}
+
+#upg {
+    margin: 10px;
+    margin-right: 40px;
+    padding: 10px;
+    border: 1px solid #fff;
+    border-radius: 9px;
+    width: 600px;
+    height: 480px;
+    float: right;
+    background-color: transparent;
+    color: #fff;
+    padding: 10px;
+}
+
+div > h2 {
+    text-align: center;
+    font-size: 28px;
+    color: green;
+} 
+
+#text {
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    text-shadow: 2px 1px 1px;
+}
+
+#work {
+    width: 400px;
+    height: 400px;
+    margin-left: 40px;
+    float: left;
+    border: 0px;
+}
+
+.upgbutton {
+    position: relative;
+    left: 12%;
+    width: 150px;
+    height: 70px;
+	border-radius: 5px;
+	padding-right: 1px;
+	color: #fff;
+    font-family: PS2P;
+}
+
+ol {
+    list-style: none;
+    margin-left: 20px;
+    column-count: 2;
+    width: 100%;
+}
+
+ol span {
+    width: 90px;
+    font-size: 18px;
+}
+
+li {
+    margin-left: 10px;
+}
+
+table {
+    border: 1px solid #000;
+    border-collapse: collapse;
+}
+			
+.gr {
+    background-color: green;
+}
+
+.rd {
+    background-color: red;
+}
+
+.bl {
+	background-color: royalblue;
+}
+
+span {
+    /* Counters */
+}
+
+footer {
+    vertical-align: bottom;
+}

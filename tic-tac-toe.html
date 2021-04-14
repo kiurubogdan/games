@@ -1,0 +1,259 @@
+﻿<style>
+    @import url(https://fonts.googleapis.com/css?family=Raleway:100);
+
+    * {
+        box-sizing: border-box;
+        font-family: "Raleway", Helvetica;
+    }
+
+    body {
+        background: lightgreen;
+    }
+
+    .game-container {
+        margin-top: 50px;
+    }
+
+    .game-board {
+        box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.15);
+        width: 400px;
+        margin: 0 auto;
+        font-size: 40px;
+        text-align: center;
+        line-height: 133.3333333333px;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    .game-board-row {
+        display: flex;
+    }
+
+    .game-board-row:last-child .game-board-space {
+        border-bottom: 0;
+    }
+
+    .game-board-space {
+        flex: 1;
+        height: 133.3333333333px;
+        cursor: pointer;
+        transition: all 0.15s;
+        background: #eeeeee;
+        border-width: 0 1px 1px 0;
+        border-style: solid;
+        border-color: #bbbbbb;
+    }
+
+    .game-board-space.selected-space,
+    .game-board-space.selected-space:hover {
+        background-color: green;
+        color: white;
+        border-color: lightblue;
+    }
+
+    .game-board-space:nth-child(3) {
+        border-right: 0;
+    }
+
+    .game-board-space:hover {
+        background: #e6e6e6;
+    }
+
+    .game-message {
+        width: 400px;
+        margin: 0 auto;
+        background-color: limegreen;
+        color: white;
+        padding: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+        transition: all 0.05s;
+        cursor: pointer;
+        border-radius: 3px;
+        transform: scale(1);
+    }
+
+    .game-message:hover {
+        background-color: lightseagreen;
+    }
+
+    .game-message a {
+        color: #333333;
+    }
+
+    .game-message:empty {
+        height: 0;
+        padding: 0;
+        border: 0;
+        transform: scale(0);
+    }
+
+</style>
+<div class="game-container">
+    <div class="game-message"></div>
+    <div class="game-board">
+        <div class="game-board-row">
+            <div class="game-board-space" data-space="1,1"></div>
+            <div class="game-board-space" data-space="1,2"></div>
+            <div class="game-board-space" data-space="1,3"></div>
+        </div>
+        <div class="game-board-row">
+            <div class="game-board-space" data-space="2,1"></div>
+            <div class="game-board-space" data-space="2,2"></div>
+            <div class="game-board-space" data-space="2,3"></div>
+        </div>
+        <div class="game-board-row">
+            <div class="game-board-space" data-space="3,1"></div>
+            <div class="game-board-space" data-space="3,2"></div>
+            <div class="game-board-space" data-space="3,3"></div>
+        </div>
+    </div>
+</div>
+<script>
+    var matrix, gameData;
+    var gameMessage = document.getElementsByClassName('game-message')[0]
+    var gameBoardSpaces = document.getElementsByClassName('game-board-space');
+
+    function initGame() {
+
+        gameMessage.innerHTML = '';
+        for (var i = 0, l = gameBoardSpaces.length; i < l; i++) {
+            gameBoardSpaces[i].innerHTML = '';
+            gameBoardSpaces[i].classList.remove('selected-space');
+        }
+
+        //clear data
+        matrix = [
+            [null, null, null],
+            [null, null, null],
+            [null, null, null]
+        ];
+
+        //reset the meta data
+        gameData = {
+            nextMover: null,
+            currentMover: null,
+            gameMessage: null,
+            gameComplete: false
+        };
+    }
+
+    initGame();
+
+    function autoMove(x, y) { // toggles between users
+        if (gameData.currentMover === null) { //if autoMoves first go, choose X
+            gameData.currentMover = 'X';
+            xMoves(x, y);
+            return;
+        }
+
+        switch (gameData.currentMover) { //last mover
+            case 'X':
+                oMoves(x, y);
+                break;
+            case 'O':
+                xMoves(x, y);
+                break;
+        }
+    }
+
+    function oMoves(x, y) { // wrappers for ease of use
+        gameData.currentMover = 'O';
+        makeMove(x, y, 'O');
+        return;
+    }
+
+    function xMoves(x, y) { // wrappers for ease of use
+        gameData.currentMover = 'X';
+        makeMove(x, y, 'X');
+        return;
+    }
+
+    function beforeMove() {
+        if (gameData.gameComplete === true) {
+            alert('Очистите поле');
+            throw ('reset board');
+        }
+        gameData.gameMessage = null;
+    }
+
+    function afterMove() {
+        checkForWinner();
+        if (gameData.gameMessage !== null) {
+            showGameMessage(gameData.gameMessage);
+            return;
+        }
+    }
+
+    function makeMove(x, y, val) {
+        beforeMove();
+
+        if (matrix[y - 1][x - 1] === null) { // make args 1 based for ease of use
+            matrix[y - 1][x - 1] = val;
+        } else {
+            gameData.gameMessage = 'Эта клетка занята!';
+        }
+
+        afterMove();
+        return;
+    }
+
+
+    function checkForWinner() {
+
+        for (var i = 0, l = matrix.length; i < l; i++) {
+            // horizontal non-null match
+            if (matrix[i][0] !== null && matrix[i][0] === matrix[i][1] && matrix[i][1] === matrix[i][2]) {
+                declareWinner(gameData.currentMover);
+                return;
+            }
+
+            // vertical non-null match
+            if (matrix[0][i] !== null && matrix[0][i] === matrix[1][i] && matrix[1][i] === matrix[2][i]) {
+                declareWinner(gameData.currentMover);
+                return;
+            }
+
+            // downward diagnal non-null-match
+            if (matrix[0][0] !== null && matrix[0][0] === matrix[1][1] && matrix[1][1] === matrix[2][2]) {
+                declareWinner(gameData.currentMover);
+                return;
+            }
+
+            // upward diagnal non-null-match
+            if (matrix[2][0] !== null && matrix[2][0] === matrix[1][1] && matrix[1][1] === matrix[0][2]) {
+                declareWinner(gameData.currentMover);
+                return;
+            }
+        }
+    }
+
+
+    // ----------------- Game UI Interactions -----------------
+    function declareWinner(player) {
+        gameData.gameComplete = true;
+        gameData.gameMessage = "";
+        gameData.gameMessage += player + ' выиграл! ';
+        gameData.gameMessage += "<span>Новая игра?</span>";
+        return;
+    }
+
+    function showGameMessage(msg) {
+        gameMessage.innerHTML = msg;
+    }
+
+    // ----------------- Handle Events -----------------
+    for (var i = 0, l = gameBoardSpaces.length; i < l; i++) {
+        gameBoardSpaces[i].addEventListener('click', function(e) {
+            var coords = e.target.dataset['space'].split(',');
+            autoMove(coords[0], coords[1]);
+            e.target.innerHTML = gameData.currentMover;
+            e.target.classList.add('selected-space');
+        });
+    }
+
+    gameMessage.addEventListener('click', function() {
+        initGame();
+    });
+
+</script>

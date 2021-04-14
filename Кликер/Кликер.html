@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+  <!-- Code by Kiuru Bogdan -->
+
+<head>
+    <meta charset="utf-8">
+    <title>КосмоКликер v.2.1</title>
+    <link rel="stylesheet" href="style.css">
+    <audio autoplay src="music/8-Bit%20Universe%20%E2%80%94%20Blank%20Space.mp3" loop hidden></audio>
+</head>
+
+<body class="rank-1" id="body" onload="CheckLoad()">
+    <div id="text">
+        <strong id="money"> Ваши деньги: 0$ </strong>&nbsp;|
+        <strong id="bysec"> В секунду: 0$ </strong>&nbsp;|
+        <strong id="level"> Ваш уровень: 0 </strong>&nbsp;|
+        <strong id="rank"> Твой ранг: Ребёнок</strong><br>
+    </div>
+    <button id="work" onclick="Working()"></button><br>
+    <div id="upg">
+        <h2>Улучшения</h2>
+        <br>
+        <div>
+            &emsp;<button id="levelup" onclick="LevelUp()" class="upgbutton gr">Повысить уровень: 50$</button>&emsp;&emsp;&emsp;&emsp;&emsp;&thinsp;&thinsp;
+            <span>
+                <button id="Rak" class="upgbutton rd" onclick="Rak()" title="Каждые 10 покупок сила апгрейда растет">+1$ к клику. цена: 10$</button><br>
+            </span>
+        </div>
+        <br>
+        <hr><br>
+        <ol>
+            <li><span id="M">0</span> | <button id="M_Second" onclick="MoneyBySecond()" class="upgbutton bl" title="+1$ сек.">Купить запчасти. цена: 10$</button></li><br>
+            <li><span id="V">0</span> | <button id="V_Second" onclick="Rar()" class="upgbutton bl" title="+10$ сек.">Улучшить крылья. цена: 120$</button></li><br>
+            <li><span id="C">0</span> | <button id="C_Second" onclick="Car()" class="upgbutton bl" title="+50$ сек.">Улучшить прочность. цена: 1000$</button></li><br>
+            <li><span id="D">0</span> | <button id="D_Second" onclick="Dar()" class="upgbutton bl" title="+100$ сек.">Улучшить топливный бак. цена: 10000$</button></li><br>
+            <li><span id="K">0</span> | <button id="K_Second" onclick="Kar()" class="upgbutton bl" title="+500$ сек.">Улучшить двигатель. цена: 80000$</button></li><br>
+            <li><span id="N">0</span> | <button id="N_Second" onclick="Nar()" class="upgbutton bl" title="+1000$ сек.">Купить двойной двигатель. цена: 200000$</button></li><br>
+            <li><span id="B">0</span> | <button id="B_Second" onclick="Bar()" class="upgbutton bl" title="+5000$ сек.">Купить тройной двигатель. цена: 1200000$</button></li>
+        </ol>
+    </div>
+    <footer>
+        <script src="script.js"></script>
+    </footer>
+</body></html>
