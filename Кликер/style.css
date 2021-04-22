@@ -9,6 +9,10 @@
    padding: 0;
 }
 
+button:active {
+	border: none;
+}
+
 body {
     color: #fff;
     font-family: PS2P;
@@ -93,8 +97,9 @@ body {
     padding: 10px;
     border: 1px solid #fff;
     border-radius: 9px;
-    width: 600px;
-    height: 480px;
+    width: 700px;
+    height: 400px;
+	overflow-y: scroll;
     float: right;
     background-color: transparent;
     color: #fff;

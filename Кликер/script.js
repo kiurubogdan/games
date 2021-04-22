@@ -13,7 +13,7 @@ function CheckLoad() {
 	}
 }
 
-var money = 0;
+var money = 1;
 var body = document.getElementById('body');
 var moneySecond = 0;
 var bysec = 0;
@@ -63,13 +63,8 @@ function Rak() {
 	}
 }
 
-function LevelUp() {
-	if (money >= levelup_cena) {
-		money = money - levelup_cena;
-		plusMoney += 1;
-		levelup_cena = Math.round(levelup_cena * 1.2);
-		level += 1;
-		if (level <= 5) {
+function checkLevel() {
+	if (level <= 5) {
 			document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Ребёнок');
 		} else if (level > 5 && level <= 10) {
 			document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Мечтатель');
@@ -124,6 +119,15 @@ function LevelUp() {
 		} else {
 			document.getElementById('rank').innerHTML = ('Твой ранг: ' + '???');
 		}
+}
+
+function LevelUp() {
+	if (money >= levelup_cena) {
+		money = money - levelup_cena;
+		plusMoney += 1;
+		levelup_cena = Math.round(levelup_cena * 1.2);
+		level += 1;
+		checkLevel();
 		document.getElementById('money').innerHTML = ('Ваши деньги:' + ' ' + money + '$');
 		document.getElementById('level').innerHTML = ('Ваш уровень:' + ' ' + level);
 		document.getElementById('levelup').innerHTML = ('Повысить уровень:' + ' ' + levelup_cena + '$');
@@ -163,6 +167,7 @@ function Rar() {
 		document.getElementById('V_Second').innerHTML = ('Улучшить крылья. цена: ' + rar_cena + '$');
 		document.getElementById('bysec').innerHTML = ('В секунду: ' + bysec);
 		document.getElementById('V').innerHTML = (V);
+		document.getElementById('money').innerHTML = ('Ваши деньги:' + ' ' + money + '$ ');
 	} else {
 		window.alert('Недостаточно денег');
 	}
@@ -178,6 +183,7 @@ function Car() {
 		document.getElementById('C_Second').innerHTML = ('Улучшить прочность. цена: ' + C_cena + '$');
 		document.getElementById('bysec').innerHTML = ('В секунду: ' + bysec);
 		document.getElementById('C').innerHTML = (C);
+		document.getElementById('money').innerHTML = ('Ваши деньги:' + ' ' + money + '$ ');
 	} else {
 		window.alert('Недостаточно денег');
 	}
@@ -193,6 +199,7 @@ function Dar() {
 		document.getElementById('D_Second').innerHTML = ('Улучшить топливный бак. цена: ' + D_cena + '$');
 		document.getElementById('bysec').innerHTML = ('В секунду: ' + bysec);
 		document.getElementById('D').innerHTML = (D);
+		document.getElementById('money').innerHTML = ('Ваши деньги:' + ' ' + money + '$ ');
 	} else {
 		window.alert('Недостаточно денег');
 	}
@@ -208,6 +215,7 @@ function Kar() {
 		document.getElementById('K_Second').innerHTML = ('Улучшить двигатель. цена: ' + K_cena + '$');
 		document.getElementById('bysec').innerHTML = ('В секунду: ' + bysec);
 		document.getElementById('K').innerHTML = (K);
+		document.getElementById('money').innerHTML = ('Ваши деньги:' + ' ' + money + '$ ');
 	} else {
 		window.alert('Недостаточно денег');
 	}
@@ -223,6 +231,7 @@ function Nar() {
 		document.getElementById('N_Second').innerHTML = ('Улучшить двойной двигатель. цена: ' + N_cena + '$');
 		document.getElementById('bysec').innerHTML = ('В секунду: ' + bysec);
 		document.getElementById('N').innerHTML = (N);
+		document.getElementById('money').innerHTML = ('Ваши деньги:' + ' ' + money + '$ ');
 	} else {
 		window.alert('Недостаточно денег');
 	}
@@ -238,6 +247,7 @@ function Bar() {
 		document.getElementById('B_Second').innerHTML = ('Улучшить тройной двигатель. цена: ' + B_cena + '$');
 		document.getElementById('bysec').innerHTML = ('В секунду: ' + bysec);
 		document.getElementById('B').innerHTML = (B);
+		document.getElementById('money').innerHTML = ('Ваши деньги:' + ' ' + money + '$ ');
 	} else {
 		window.alert('Недостаточно денег');
 	}
@@ -297,5 +307,35 @@ function Load() {
 	K = parseInt(localStorage.getItem("K"));
 	N = parseInt(localStorage.getItem("N"));
 	B = parseInt(localStorage.getItem("B"));
+
+	document.getElementById('money').innerHTML = ('Ваши деньги:' + ' ' + money + '$ ');
+	document.getElementById('Rak').innerHTML = ('+' + clickup + '$ к клику. цена: ' + Rak_cena + '$');
+	document.getElementById('level').innerHTML = ('Ваш уровень:' + ' ' + level);
+	document.getElementById('levelup').innerHTML = ('Повысить уровень:' + ' ' + levelup_cena + '$');
+	document.getElementById('M_Second').innerHTML = ('Купить запчасти. цена: ' + MonBySec_cena + '$');
+	document.getElementById('bysec').innerHTML = ('В секунду: ' + bysec);
+	document.getElementById('M').innerHTML = (M);
+	document.getElementById('V_Second').innerHTML = ('Улучшить крылья. цена: ' + rar_cena + '$');
+	document.getElementById('bysec').innerHTML = ('В секунду: ' + bysec);
+	document.getElementById('V').innerHTML = (V);
+	document.getElementById('C_Second').innerHTML = ('Улучшить прочность. цена: ' + C_cena + '$');
+	document.getElementById('bysec').innerHTML = ('В секунду: ' + bysec);
+	document.getElementById('C').innerHTML = (C);
+	document.getElementById('D_Second').innerHTML = ('Улучшить топливный бак. цена: ' + D_cena + '$');
+	document.getElementById('bysec').innerHTML = ('В секунду: ' + bysec);
+	document.getElementById('D').innerHTML = (D);
+	document.getElementById('K_Second').innerHTML = ('Улучшить двигатель. цена: ' + K_cena + '$');
+	document.getElementById('bysec').innerHTML = ('В секунду: ' + bysec);
+	document.getElementById('K').innerHTML = (K);
+	document.getElementById('N_Second').innerHTML = ('Улучшить двойной двигатель. цена: ' + N_cena + '$');
+	document.getElementById('bysec').innerHTML = ('В секунду: ' + bysec);
+	document.getElementById('N').innerHTML = (N);
+	document.getElementById('B_Second').innerHTML = ('Улучшить тройной двигатель. цена: ' + B_cena + '$');
+	document.getElementById('bysec').innerHTML = ('В секунду: ' + bysec);
+	document.getElementById('B').innerHTML = (B);
+	checkLevel();
 }
 setInterval('Money_Second()', 1000);
+
+CheckLoad();
+setInterval('Save()', 30000);
