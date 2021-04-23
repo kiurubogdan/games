@@ -59,60 +59,60 @@ function Rak() {
 
 function checkLevel() {
 	if (level <= 5) {
-			document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Ребёнок');
-		} else if (level > 5 && level <= 10) {
-			document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Мечтатель');
-			body.classList.remove('rank-1');
-			body.classList.add('rank-2');
-		} else if (level > 10 && level <= 20) {
-			document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Тренирующийся');
-			body.classList.remove('rank-2');
-			body.classList.add('rank-3');
-		} else if (level > 20 && level <= 30) {
-			document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Новый Космонавт');
-			body.classList.remove('rank-3');
-			body.classList.add('rank-4');
-		} else if (level > 30 && level <= 50) {
-			document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Космонавт');
-			body.classList.remove('rank-4');
-			body.classList.add('rank-5');
-		} else if (level > 50 && level <= 75) {
-			document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Ветеран');
-			body.classList.remove('rank-5');
-			body.classList.add('rank-6');
-		} else if (level > 75 && level <= 100) {
-			document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Исследователь системы');
-			body.classList.remove('rank-6');
-			body.classList.add('rank-7');
-		} else if (level > 100 && level <= 125) {
-			document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Покоритель системы');
-			body.classList.remove('rank-7');
-			body.classList.add('rank-8');
-		} else if (level > 125 && level <= 150) {
-			document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Исследователь галактики');
-			body.classList.remove('rank-8');
-			body.classList.add('rank-9');
-		} else if (level > 150 && level <= 200) {
-			document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Покоритель галактики');
-			body.classList.remove('rank-9');
-			body.classList.add('rank-10');
-		} else if (level === 200) {
-			document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Исследователь Вселенной');
-			alert('Поздравляю! Ты прошел игру!');
-			body.classList.remove('rank-10');
-			body.classList.add('rank-11');
-		} else if (level > 200 && level < 1000) {
-			document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Исследователь Вселенной');
-			body.classList.remove('rank-10');
-			body.classList.add('rank-11');
-		} else if (level === 1000) {
-			document.getElementById('rank').innerHTML = ('Твой ранг: ' + '???');
-			body.classList.remove('rank-11');
-			body.classList.add('rank-12');
-			alert('Ты до сих пор играешь?');
-		} else {
-			document.getElementById('rank').innerHTML = ('Твой ранг: ' + '???');
-		}
+		document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Ребёнок');
+	} else if (level > 5 && level <= 10) {
+		document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Мечтатель');
+		body.classList.remove('rank-1');
+		body.classList.add('rank-2');
+	} else if (level > 10 && level <= 20) {
+		document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Тренирующийся');
+		body.classList.remove('rank-2');
+		body.classList.add('rank-3');
+	} else if (level > 20 && level <= 30) {
+		document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Новый Космонавт');
+		body.classList.remove('rank-3');
+		body.classList.add('rank-4');
+	} else if (level > 30 && level <= 50) {
+		document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Космонавт');
+		body.classList.remove('rank-4');
+		body.classList.add('rank-5');
+	} else if (level > 50 && level <= 75) {
+		document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Ветеран');
+		body.classList.remove('rank-5');
+		body.classList.add('rank-6');
+	} else if (level > 75 && level <= 100) {
+		document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Исследователь системы');
+		body.classList.remove('rank-6');
+		body.classList.add('rank-7');
+	} else if (level > 100 && level <= 125) {
+		document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Покоритель системы');
+		body.classList.remove('rank-7');
+		body.classList.add('rank-8');
+	} else if (level > 125 && level <= 150) {
+		document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Исследователь галактики');
+		body.classList.remove('rank-8');
+		body.classList.add('rank-9');
+	} else if (level > 150 && level <= 200) {
+		document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Покоритель галактики');
+		body.classList.remove('rank-9');
+		body.classList.add('rank-10');
+	} else if (level === 200) {
+		document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Исследователь Вселенной');
+		alert('Поздравляю! Ты прошел игру!');
+		body.classList.remove('rank-10');
+		body.classList.add('rank-11');
+	} else if (level > 200 && level < 1000) {
+		document.getElementById('rank').innerHTML = ('Твой ранг: ' + 'Исследователь Вселенной');
+		body.classList.remove('rank-10');
+		body.classList.add('rank-11');
+	} else if (level === 1000) {
+		document.getElementById('rank').innerHTML = ('Твой ранг: ' + '???');
+		body.classList.remove('rank-11');
+		body.classList.add('rank-12');
+		alert('Ты до сих пор играешь?');
+	} else {
+		document.getElementById('rank').innerHTML = ('Твой ранг: ' + '???');
+	}
 }
 
 function LevelUp() {
@@ -334,19 +334,20 @@ function Clear() {
 	money = 0;
 	moneySecond = 0;
 	bysec = 0;
-	plusMoney = 0;
-	clickup = 0;
+	plusMoney = 1;
+	clickup = 1;
 	level = 0;
 
-	MonBySec_cena = 0;
-	levelup_cena = 0;
-	Rak_cena = 0;
-	rar_cena = 0;
-	C_cena = 0;
-	D_cena = 0;
-	K_cena = 0;
-	N_cena = 0;
-	B_cena = 0;
+	levelup_cena = 50
+	Rak_cena = 10
+	MonBySec_cena = 10
+	rar_cena = 120
+	C_cena = 1000
+	D_cena = 10000
+	K_cena = 80000
+	N_cena = 200000
+	B_cena = 1200000;
+
 
 	ClickUp = 0;
 	M = 0;
