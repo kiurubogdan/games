@@ -7,12 +7,6 @@
 console.log('<== Хочешь читерить? ==>');
 //--------------------------------------------------------------------
 
-function CheckLoad() {
-	if (localStorage.getItem("money") !== "undefined") {
-		Load();
-	}
-}
-
 var money = 1;
 var body = document.getElementById('body');
 var moneySecond = 0;
@@ -336,6 +330,4 @@ function Load() {
 	checkLevel();
 }
 setInterval('Money_Second()', 1000);
-
-CheckLoad();
 setInterval('Save()', 30000);
