@@ -329,5 +329,60 @@ function Load() {
 	document.getElementById('B').innerHTML = (B);
 	checkLevel();
 }
+
+function Clear() {
+	money = 0;
+	moneySecond = 0;
+	bysec = 0;
+	plusMoney = 0;
+	clickup = 0;
+	level = 0;
+
+	MonBySec_cena = 0;
+	levelup_cena = 0;
+	Rak_cena = 0;
+	rar_cena = 0;
+	C_cena = 0;
+	D_cena = 0;
+	K_cena = 0;
+	N_cena = 0;
+	B_cena = 0;
+
+	ClickUp = 0;
+	M = 0;
+	V = 0;
+	C = 0;
+	D = 0;
+	K = 0;
+	N = 0;
+	B = 0;
+
+	document.getElementById('money').innerHTML = ('Ваши деньги:' + ' ' + money + '$ ');
+	document.getElementById('Rak').innerHTML = ('+' + clickup + '$ к клику. цена: ' + Rak_cena + '$');
+	document.getElementById('level').innerHTML = ('Ваш уровень:' + ' ' + level);
+	document.getElementById('levelup').innerHTML = ('Повысить уровень:' + ' ' + levelup_cena + '$');
+	document.getElementById('M_Second').innerHTML = ('Купить запчасти. цена: ' + MonBySec_cena + '$');
+	document.getElementById('bysec').innerHTML = ('В секунду: ' + bysec);
+	document.getElementById('M').innerHTML = (M);
+	document.getElementById('V_Second').innerHTML = ('Улучшить крылья. цена: ' + rar_cena + '$');
+	document.getElementById('bysec').innerHTML = ('В секунду: ' + bysec);
+	document.getElementById('V').innerHTML = (V);
+	document.getElementById('C_Second').innerHTML = ('Улучшить прочность. цена: ' + C_cena + '$');
+	document.getElementById('bysec').innerHTML = ('В секунду: ' + bysec);
+	document.getElementById('C').innerHTML = (C);
+	document.getElementById('D_Second').innerHTML = ('Улучшить топливный бак. цена: ' + D_cena + '$');
+	document.getElementById('bysec').innerHTML = ('В секунду: ' + bysec);
+	document.getElementById('D').innerHTML = (D);
+	document.getElementById('K_Second').innerHTML = ('Улучшить двигатель. цена: ' + K_cena + '$');
+	document.getElementById('bysec').innerHTML = ('В секунду: ' + bysec);
+	document.getElementById('K').innerHTML = (K);
+	document.getElementById('N_Second').innerHTML = ('Улучшить двойной двигатель. цена: ' + N_cena + '$');
+	document.getElementById('bysec').innerHTML = ('В секунду: ' + bysec);
+	document.getElementById('N').innerHTML = (N);
+	document.getElementById('B_Second').innerHTML = ('Улучшить тройной двигатель. цена: ' + B_cena + '$');
+	document.getElementById('bysec').innerHTML = ('В секунду: ' + bysec);
+	document.getElementById('B').innerHTML = (B);
+	checkLevel();
+}
 setInterval('Money_Second()', 1000);
 setInterval('Save()', 30000);
