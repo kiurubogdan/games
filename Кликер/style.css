@@ -104,11 +104,13 @@ body {
     background-color: transparent;
     color: #fff;
     padding: 10px;
+	text-align: center;
 }
 
 div > h2 {
     text-align: center;
     font-size: 28px;
+	margin: 10px;
     color: green;
 } 
 
@@ -129,8 +131,6 @@ div > h2 {
 }
 
 .upgbutton {
-    position: relative;
-    left: 12%;
     width: 150px;
     height: 70px;
 	border-radius: 5px;
@@ -178,4 +178,10 @@ span {
 
 footer {
     vertical-align: bottom;
+}
+
+.save--load {
+	text-align: center;
+	border-top: 2px solid #fff; 
+	padding-top: 10px;
 }
